@@ -1,4 +1,4 @@
-package ru.avanesyan.vkr.modelBuyer;
+package ru.avanesyan.vkr.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -6,17 +6,25 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.sql.Date;
+
 @Entity
-@Table(schema = "buyer")
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @ToString
-//Бд заказчика
-public class ProductBuyer {
+public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private int quantity;
-    private String name;
+
+    private int amount;
+
+    Product product;
+    Provider provider;
+
+    @Enumerated(EnumType.STRING)
+    private Status status;
+    private Date arrivalDate;
+    private int lostInDays;
 }

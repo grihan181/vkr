@@ -9,5 +9,7 @@ import java.util.Optional;
 
 @RepositoryRestResource(collectionResourceRel = "productBuyer", path = "productBuyer")
 public interface ProductBuyerRepository extends PagingAndSortingRepository<ProductBuyer, Long> {
-    Optional<ProductBuyer> findById(Long id);
+    ProductBuyer save(ProductBuyer entity);
+
+    ProductBuyer findById(Long id);
 }

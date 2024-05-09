@@ -38,6 +38,7 @@ public class CheckProductCron {
 
             for(ProductBuyer product : productBuyers) {
                 product.setQuantity(product.getQuantity() - 1);
+                productBuyerRepository.save(product);
             }
         }
     }
@@ -56,7 +57,7 @@ public class CheckProductCron {
 
 
             products.forEach(this::setSpeed);
-            List<Product> fileredProducts = products.getContent().stream().filter(product -> product.getQuantity() / product.getSpeed() <= product.getMinWorkDuration()).toList();
+            List<Product> fileredProducts = products.getContent().stream().filter(product -> product.getQuantity() / product.getSpeed() <= product.getBufer()).toList();
 
 
             for(Product product : fileredProducts) {
@@ -76,6 +77,6 @@ public class CheckProductCron {
         productRepository.save(product);
     }
     private int getProductBuyerQuantity(Product product) {
-        return productBuyerRepository.findById(product.getBuyerId()).get().getQuantity();
+        return productBuyerRepository.findById(product.getBuyerId()).getQuantity();
     }
 }

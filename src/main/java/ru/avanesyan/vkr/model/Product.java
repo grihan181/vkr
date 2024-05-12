@@ -24,8 +24,8 @@ public class Product {
     private int quantity;
     private String name;
 
-    private Double speed; // об/час
-    private int bufer; // час
+    private Double speed;
+    private int bufer;
     private int minValue;
     private int maxValue;
 

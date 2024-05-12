@@ -11,5 +11,5 @@ import ru.avanesyan.vkr.model.Product;
 public interface ProductRepository extends PagingAndSortingRepository<Product, Long> {
     Product save(Product entity);
 
-    Page<Product> findAll(Pageable pageable);
+    Page<Product> findAllByOrderByIdAsc(Pageable pageable);
 }

@@ -21,7 +21,7 @@ public class OrderController {
         return orderService.getOrders(page, size);
     }
 
-    @GetMapping("findByProduct")
+    @GetMapping("findByProductName")
     public List<Orders> findByName(@RequestParam String name) {
         return orderService.getOrdersByName(name);
     }

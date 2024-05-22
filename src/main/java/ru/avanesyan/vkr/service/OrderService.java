@@ -16,6 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class OrderService {
     private final OrderRepository orderRepository;
+    private final ProductService productService;
     public void createOrder(Orders orders) {
         orderRepository.save(orders);
     }
@@ -34,5 +35,10 @@ public class OrderService {
 
     public List<Orders> getDashboard(Product product, LocalDate start, LocalDate end) {
         return orderRepository.findAllByProductAndArrivalDateBetween(product, start, end);
+    }
+
+    public List<Orders> getOrdersByName(String name) {
+        Product product = productService.getProductByName(name);
+        return findByProduct(product);
     }
 }

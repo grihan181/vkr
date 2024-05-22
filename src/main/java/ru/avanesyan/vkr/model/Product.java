@@ -29,7 +29,7 @@ public class Product {
     private int minValue;
     private int maxValue;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
     //@OrderBy("priority ASC")
     private Set<Provider> providers;
 }

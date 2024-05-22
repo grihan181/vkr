@@ -10,6 +10,7 @@ import ru.avanesyan.vkr.service.OrderService;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 @RequestMapping(value = "/order")
 @RequiredArgsConstructor
 public class OrderController {
@@ -18,6 +19,11 @@ public class OrderController {
     @GetMapping("{page}/{size}")
     public Page<Orders> getOrder(@PathVariable int page, @PathVariable int size) {
         return orderService.getOrders(page, size);
+    }
+
+    @GetMapping("findByProduct")
+    public List<Orders> findByName(@RequestParam String name) {
+        return orderService.getOrdersByName(name);
     }
 
     @PostMapping("/getDashboard")

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import ru.avanesyan.vkr.model.Orders;
 import ru.avanesyan.vkr.model.Product;
 import ru.avanesyan.vkr.repo.OrderRepository;
+import ru.avanesyan.vkr.repo.ProductRepository;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -16,6 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class OrderService {
     private final OrderRepository orderRepository;
+    private final ProductRepository productRepository;
     private final ProductService productService;
     public void createOrder(Orders orders) {
         orderRepository.save(orders);
@@ -33,7 +35,8 @@ public class OrderService {
         return orderRepository.findAll(PageRequest.of(page, size, Sort.by("arrivalDate")));
     }
 
-    public List<Orders> getDashboard(Product product, LocalDate start, LocalDate end) {
+    public List<Orders> getDashboard(Long productId, LocalDate start, LocalDate end) {
+        Product product = productRepository.findById(productId);
         return orderRepository.findAllByProductAndArrivalDateBetween(product, start, end);
     }
 

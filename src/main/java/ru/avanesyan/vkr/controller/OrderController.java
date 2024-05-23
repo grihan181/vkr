@@ -26,9 +26,9 @@ public class OrderController {
         return orderService.getOrdersByName(name);
     }
 
-    @PostMapping("/getDashboard")
-    public List<Orders> getDashboard(@RequestBody DateDto dateDto) {
-        return orderService.getDashboard(dateDto.getProduct(), dateDto.getStartDate(), dateDto.getEndDate());
+    @PostMapping("/getDashboard/{id}")
+    public List<Orders> getDashboard(@PathVariable Long id, @RequestBody DateDto dateDto) {
+        return orderService.getDashboard(id, dateDto.getStartDate(), dateDto.getEndDate());
     }
     @PostMapping
     public Orders saveOrder(@RequestBody Orders orders) {

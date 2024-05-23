@@ -13,6 +13,4 @@ import java.time.LocalDate;
 public class DateDto {
     private LocalDate startDate;
     private LocalDate endDate;
-
-    private Product product;
 }

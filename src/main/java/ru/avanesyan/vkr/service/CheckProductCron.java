@@ -24,8 +24,8 @@ public class CheckProductCron {
     private final ProductBuyerRepository productBuyerRepository;
     private final int countElem = 2;
 
-    @Scheduled(cron = "*/1 * * * * *")
-    public void useProductBuyer() {
+   // @Scheduled(cron = "*/1 * * * * *")
+    /*public void useProductBuyer() {
         int page = 0;
         Pageable pageable = PageRequest.of(page, countElem);
 
@@ -40,7 +40,7 @@ public class CheckProductCron {
                 productBuyerRepository.save(product);
             }
         }
-    }
+    }*/
 
     @Scheduled(cron = "*/5 * * * * *")
     public void checkProduct() {

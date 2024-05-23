@@ -3,9 +3,9 @@ spring:
     name: vkr
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/vkr
+    url: jdbc:postgresql://postgres:slWiwEQgIIxwZsEQOjOmklLdRfBNygWc@postgres.railway.internal:5432/railway
     username: postgres
-    password: postgres
+    password: slWiwEQgIIxwZsEQOjOmklLdRfBNygWc
     driver: class-name=org.postgresql.Driver
   jpa:
     hibernate:

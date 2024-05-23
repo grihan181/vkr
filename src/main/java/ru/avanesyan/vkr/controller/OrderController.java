@@ -41,6 +41,6 @@ public class OrderController {
 
     @GetMapping("getAllCurrentOrders")
     public List<Orders> getAllCurrentOrders(@RequestParam String name) {
-        return orderService.getOrdersByName(name);
+        return orderService.getOrdersByProductName(name);
     }
 }

@@ -17,5 +17,5 @@ public interface OrderRepository extends JpaRepository<Orders, Long> {
     Page<Orders> findAll(Pageable pageable);
     long countByDeliveryStatus(DeliveryStatus deliveryStatus);
 
-    List<Orders> findAllByProductAndArrivalDateBetween(Product product, LocalDate start, LocalDate end);
+    List<Orders> findAllByProductAndArrivalDateBetweenOrderByArrivalDate(Product product, LocalDate start, LocalDate end);
 }

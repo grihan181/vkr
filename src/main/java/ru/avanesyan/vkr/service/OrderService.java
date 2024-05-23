@@ -38,10 +38,10 @@ public class OrderService {
 
     public List<Orders> getDashboard(Long productId, LocalDate start, LocalDate end) {
         Product product = productRepository.findById(productId);
-        return orderRepository.findAllByProductAndArrivalDateBetween(product, start, end);
+        return orderRepository.findAllByProductAndArrivalDateBetweenOrderByArrivalDate(product, start, end);
     }
 
-    public List<Orders> getOrdersByName(String name) {
+    public List<Orders> getOrdersByProductName(String name) {
         Product product = productService.getProductByName(name);
         return findByProduct(product);
     }

@@ -1,5 +1,5 @@
 <script setup>
-import {computed, onMounted, ref} from 'vue'
+import {cloneVNode, computed, onMounted, ref} from 'vue'
 import {Line} from 'vue-chartjs'
 import {
   Chart as ChartJS,
@@ -63,10 +63,11 @@ const chartOptions = {
 }
 
 const selectedOrder = ref(0)
-
+const orderName = ref ('')
 
 function updateChart(item) {
   selectedOrder.value = item.id
+  orderName.value = item.product.name
   fetch(`http://localhost:8080/order/getDashboard/${item.product.id}`, {
     method: 'POST',
     headers: {'content-type': 'application/json;'},
@@ -134,7 +135,7 @@ function updateChart(item) {
             </v-card>
           </div>
           <v-card width="700px" height="550px" class="pa-10">
-            <p class="font-weight-bold">График заказов: Двигатель</p>
+            <p class="font-weight-bold">График заказов: {{orderName}}</p>
             <p class="font-weight-bold">Деапозон дат</p>
             <div class="d-flex">
               <v-text-field label="от" width="50" type="date" v-model="startDate"></v-text-field>

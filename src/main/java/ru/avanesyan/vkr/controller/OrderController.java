@@ -23,7 +23,7 @@ public class OrderController {
 
     @GetMapping("getCountAllOrders")
     public long getCountAllOrders() {
-        return orderService.getCountByDeliveryStatus("COMPLETED");
+        return orderService.getCountByDeliveryStatus("ON_TIME");
     }
     @GetMapping("getCountAllLateOrders")
     public long getCountAllLateOrders() {

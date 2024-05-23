@@ -42,8 +42,8 @@ public class CheckProductCron {
         }
     }*/
 
-    @Scheduled(cron = "*/5 * * * * *")
-    public void checkProduct() {
+    //@Scheduled(cron = "*/5 * * * * *")
+/*    public void checkProduct() {
         int page = 0;
         Pageable pageable = PageRequest.of(page, countElem);
 
@@ -72,7 +72,7 @@ public class CheckProductCron {
                 orderService.createOrder(orders);
             }
         }
-    }
+    }*/
 
     private void setSpeed(Product product) {
         int newQuantity = getProductBuyerQuantity(product);

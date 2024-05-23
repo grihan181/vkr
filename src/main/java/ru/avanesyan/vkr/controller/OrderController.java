@@ -21,9 +21,13 @@ public class OrderController {
         return orderService.getOrders(page, size);
     }
 
-    @GetMapping("findByProductName")
-    public List<Orders> findByName(@RequestParam String name) {
-        return orderService.getOrdersByName(name);
+    @GetMapping("getCountAllOrders")
+    public long getCountAllOrders() {
+        return orderService.getCountByDeliveryStatus("COMPLETED");
+    }
+    @GetMapping("getCountAllLateOrders")
+    public long getCountAllLateOrders() {
+        return orderService.getCountByDeliveryStatus("LATE");
     }
 
     @PostMapping("/getDashboard/{id}")
@@ -33,5 +37,10 @@ public class OrderController {
     @PostMapping
     public Orders saveOrder(@RequestBody Orders orders) {
         return orderService.saveOrder(orders);
+    }
+
+    @GetMapping("getAllCurrentOrders")
+    public List<Orders> getAllCurrentOrders(@RequestParam String name) {
+        return orderService.getOrdersByName(name);
     }
 }

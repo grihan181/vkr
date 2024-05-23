@@ -7,6 +7,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import ru.avanesyan.vkr.model.Orders;
 import ru.avanesyan.vkr.model.Product;
+import ru.avanesyan.vkr.model.enums.DeliveryStatus;
 import ru.avanesyan.vkr.repo.OrderRepository;
 import ru.avanesyan.vkr.repo.ProductRepository;
 
@@ -43,5 +44,9 @@ public class OrderService {
     public List<Orders> getOrdersByName(String name) {
         Product product = productService.getProductByName(name);
         return findByProduct(product);
+    }
+
+    public long getCountByDeliveryStatus(String status) {
+        return orderRepository.countByDeliveryStatus(DeliveryStatus.valueOf(status));
     }
 }

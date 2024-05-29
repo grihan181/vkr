@@ -20,6 +20,7 @@ public class Orders {
     private Long id;
 
     private int amount;
+    private int bufer;
 
     @ManyToOne
     Product product;

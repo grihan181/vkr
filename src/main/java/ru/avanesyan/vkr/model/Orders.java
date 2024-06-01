@@ -20,7 +20,10 @@ public class Orders {
     private Long id;
 
     private int amount;
+
     private int bufer;
+    private int minValue;
+    private int maxValue;
 
     @ManyToOne
     Product product;

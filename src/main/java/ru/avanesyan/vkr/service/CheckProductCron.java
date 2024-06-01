@@ -24,26 +24,33 @@ public class CheckProductCron {
     private final ProductBuyerRepository productBuyerRepository;
     private final int countElem = 2;
 
-   // @Scheduled(cron = "*/1 * * * * *")
-    /*public void useProductBuyer() {
+    //@Scheduled(cron = "*/5 * * * * *")
+    public void useProductBuyer() {
         int page = 0;
         Pageable pageable = PageRequest.of(page, countElem);
 
-        Page<ProductBuyer> productBuyers = productBuyerRepository.findAll(pageable);
+        Page<ProductBuyer> productBuyers = productBuyerRepository.findAllByOrderByIdAsc(pageable);
 
+        int count = 5;
         for(int i = 0; i < productBuyers.getTotalPages(); i++) {
             pageable = PageRequest.of(i, countElem);
-            productBuyers = productBuyerRepository.findAll(pageable);
+            productBuyers = productBuyerRepository.findAllByOrderByIdAsc(pageable);
 
             for(ProductBuyer product : productBuyers) {
-                product.setQuantity(product.getQuantity() - 1);
+                if(product.getId() == 1) {
+                    product.setQuantity(product.getQuantity() - 10);
+                } else {
+                    product.setQuantity(product.getQuantity() - count++);
+                }
                 productBuyerRepository.save(product);
             }
         }
-    }*/
+    }
 
-    //@Scheduled(cron = "*/5 * * * * *")
-/*    public void checkProduct() {
+    //@Scheduled(cron = "*/20 * * * * *")
+    public void checkProduct() {
+        useProductBuyer();
+
         int page = 0;
         Pageable pageable = PageRequest.of(page, countElem);
 
@@ -61,22 +68,34 @@ public class CheckProductCron {
             }
 
             for(Product product : filteredProducts) {
-                int daysTime = (int) Math.ceil((product.getBufer() - product.getMinValue()) / product.getSpeed());
+                int daysTime = (int) Math.ceil((product.getQuantity() - product.getMinValue()) / product.getSpeed());
                 int orderAmount = (int) Math.ceil(product.getMaxValue() - product.getQuantity() + daysTime * product.getSpeed());
                 Orders orders = new Orders();
                 orders.setProduct(product);
 
+                if(orderAmount > product.getMaxValue()) {
+                    orderAmount = product.getMaxValue();
+                }
+
+                orders.setBufer(product.getBufer());
+                orders.setMaxValue(product.getMaxValue());
+                orders.setMinValue(product.getMinValue());
+
                 providerService.getStartOrderInfo(orders, daysTime, orderAmount);
 
 
+                System.out.println(orders);;
                 orderService.createOrder(orders);
+
+                ProductBuyer productBuyer =  productBuyerRepository.findById(product.getBuyerId());
+                productBuyer.setQuantity(orders.getAmount());
+                productBuyerRepository.save(productBuyer);
             }
         }
-    }*/
+    }
 
     private void setSpeed(Product product) {
         int newQuantity = getProductBuyerQuantity(product);
-        System.out.println(product);
 
         product.setSpeed(Math.abs(newQuantity * 1.0 - product.getQuantity()));
         product.setQuantity(newQuantity);

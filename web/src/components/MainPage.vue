@@ -8,7 +8,7 @@
         align-tabs="end"
         color="#477BFF"
       >
-        <v-tab :value="1">Продукты</v-tab>
+        <v-tab :value="1">Изделия</v-tab>
         <v-tab :value="2">Заказы</v-tab>
       </v-tabs>
     </v-toolbar>

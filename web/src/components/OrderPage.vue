@@ -1,5 +1,5 @@
 <script setup>
-import {cloneVNode, computed, onMounted, ref} from 'vue'
+import {computed, ref} from 'vue'
 import {Line} from 'vue-chartjs'
 import {
   Chart as ChartJS,
@@ -22,7 +22,10 @@ ChartJS.register(
   Legend
 )
 
-const listData = ref([])
+const listData = ref([]);
+const allOrders= ref(null);
+const lateOrders= ref(null);
+
 
 fetch('http://localhost:8080/order/0/20', {
   method: 'GET',
@@ -32,6 +35,18 @@ fetch('http://localhost:8080/order/0/20', {
   .then(() => {
     console.log(listData.value)
   })
+
+fetch('http://localhost:8080/order/getCountAllOrders', {
+  method: 'GET',
+})
+  .then((resp) => resp.json())
+  .then((content) => allOrders.value = content)
+
+fetch('http://localhost:8080/order/getCountAllLateOrders', {
+  method: 'GET',
+})
+  .then((resp) => resp.json())
+  .then((content) => lateOrders.value = content)
 
 
 const amount= ref([])
@@ -101,7 +116,7 @@ function updateChart(item) {
       ></v-text-field>
       <div class="d-flex justify-space-between">
         <div class="d-flex flex-column ga-5">
-          <v-card v-for="item in listData" v-bind="item.id" width="468px" height="144px" :variant="item.id === selectedOrder ?'outlined' : 'elevated'"  @click="updateChart(item)">
+          <v-card v-for="item in listData" v-bind:key="item.id" width="468px" height="144px" :variant="item.id === selectedOrder ?'outlined' : 'elevated'"  @click="updateChart(item)">
             <v-card-title>{{item.product.name}}</v-card-title>
             <v-card-text>
               <div class="w-100 d-flex justify-space-between">
@@ -127,19 +142,29 @@ function updateChart(item) {
         </div>
         <div style="width: 700px" class="d-flex flex-column ga-10">
           <div class="d-flex justify-space-between">
-            <v-card width="222px" height="144px">
-
+            <v-card rounded width="222px" height="144px">
+              <v-card-title class="order-card-title">Всего заказов</v-card-title>
+              <template #actions>
+                <span class="orders-count">{{allOrders}}</span>
+              </template>
             </v-card>
-            <v-card width="222px" height="144px">
-
+            <v-card class="orders-count-card" rounded width="222px" height="144px">
+              <v-card-title class="order-card-title">Задерживаются</v-card-title>
+              <template #actions>
+                <span class="orders-count">{{lateOrders}}</span>
+              </template>
             </v-card>
           </div>
           <v-card width="700px" height="550px" class="pa-10">
             <p class="font-weight-bold">График заказов: {{orderName}}</p>
             <p class="font-weight-bold">Деапозон дат</p>
-            <div class="d-flex">
-              <v-text-field label="от" width="50" type="date" v-model="startDate"></v-text-field>
-              <v-text-field label="до" width="50" type="date" v-model="endDate"></v-text-field>
+            <div class="d-flex w-100 justify-space-between">
+              <div style="width: 200px">
+                <v-text-field label="от" variant="outlined"  type="date" v-model="startDate"></v-text-field>
+              </div>
+              <div style="width: 200px">
+                <v-text-field label="до"  variant="outlined" type="date" v-model="endDate"></v-text-field>
+              </div>
             </div>
             <div>
               <Line id="my-chart-id" :options="chartOptions" :data="chartData"/>
@@ -159,5 +184,15 @@ function updateChart(item) {
 
 .container-pa {
   padding: 12px 240px;
+}
+.order-card-title {
+  font-size: 16px !important;
+}
+.orders-count {
+  font-size: 40px;
+  font-weight: 60;
+}
+.orders-count-card {
+  border: 1px solid red;
 }
 </style>
